@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
-import { getContacts } from 'redux/selectors';
+// import { getContacts } from 'redux/selectors';
 import { Filter } from './Filter/Filter';
 import { AppContainer } from './App.styled';
 
 export const App = () => {
-  const contacts = useSelector(getContacts);
+  // const contacts = useSelector(getContacts);
 
   //в компонент ContactList передаём пользователей для отрисовки (после фильтрации)
   // const getFilteredData = () => {
