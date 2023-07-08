@@ -12,6 +12,7 @@ export const ContactList = () => {
 
   //функция отрисовки контактов (после фильтрации)
   const getFilterContacts = () => {
+    
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(visibleContacts.toLowerCase())
     );
