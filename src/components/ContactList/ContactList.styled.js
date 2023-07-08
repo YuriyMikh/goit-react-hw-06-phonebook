@@ -17,6 +17,6 @@ export const StyledLi = styled.li`
   /* font-size: ; */
 `;
 
-export const StyledButton = styled.button`
+export const StyledDeleteButton = styled.button`
   cursor: pointer;
 `;

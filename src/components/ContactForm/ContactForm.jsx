@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import PropTypes from 'prop-types';
 import { addContact } from 'redux/contactsSlice';
-import { getContacts } from 'redux/selectors';
-
+import { selectContacts } from 'redux/selectors';
 import {
   StyledButton,
   StyledForm,
@@ -14,7 +12,7 @@ import {
 export const ContactForm = () => {
   const dispatch = useDispatch();
 
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -38,17 +36,17 @@ export const ContactForm = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-
+    //проверяем чтоб такого имени не было в contacts
     if (contacts.find(contact => contact.name === name)) {
       alert(`${name} is already in contacts`);
       return;
     }
 
-    dispatch(addContact(name, number));
-    // onSubmit(name, number); //в файл App.jsx передаем пропсом данные после сабмита
+    dispatch(addContact(name, number)); //через диспатч в файл contactsSlice.js передаем name и number
     reset(); //очищаем инпуты
   };
 
+  //функция для сброса формы
   const reset = () => {
     setName('');
     setNumber('');
@@ -85,7 +83,3 @@ export const ContactForm = () => {
     </StyledForm>
   );
 };
-
-// ContactForm.propTypes = {
-//   onSubmit: PropTypes.func.isRequired,
-// };

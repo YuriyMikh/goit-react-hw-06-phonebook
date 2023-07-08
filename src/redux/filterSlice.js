@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const filterSlice = createSlice({
-  name: 'filter',
-  initialState: {
-    value: '',
-  },
+  name: 'filter', //имя слайса
+    initialState: { value: '' }, //начальное состояние редюсера слайса
+    //объект редюсера
   reducers: {
     addFilter(state, action) {
       state.value = action.payload;
@@ -12,5 +11,5 @@ const filterSlice = createSlice({
   },
 });
 
-export const { addFilter } = filterSlice.actions;
-export const filterReducer = filterSlice.reducer;
+export const { addFilter } = filterSlice.actions; //генератор экшенов
+export const filterReducer = filterSlice.reducer; //редюсер слайса

@@ -1,65 +1,36 @@
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getContacts } from 'redux/selectors';
+import { selectContacts, selectFilteredData } from 'redux/selectors';
 import { deleteContact } from 'redux/contactsSlice';
-import { StyledButton, StyledLi, StyledUl } from './ContactList.styled';
+import { StyledDeleteButton, StyledLi, StyledUl } from './ContactList.styled';
 
-// const getFilteredContacts = contacts => {
-// switch (contacts) {
-//   case value:
-//     break;
+export const ContactList = () => {
+  const dispatch = useDispatch(); //получаем ссылку на функцию отправки экшенов
 
-//   default:
-//     break;
-// }
-// };
+  const contacts = useSelector(selectContacts); //из файла contactsSlice.js (состояния Redux) получаем значение из state.contacts
+  const visibleContacts = useSelector(selectFilteredData); //из файла contactsSlice.js (состояния Redux) получаем значение из state.filter.value
 
-export const ContactList = ({ contact }) => {
-  const dispatch = useDispatch();
+  //функция отрисовки контактов (после фильтрации)
+  const getFilterContacts = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(visibleContacts.toLowerCase())
+    );
+  };
 
-  const contacts = useSelector(getContacts);
-  // const visibleContacts = getFilteredContacts(contacts);
+  const handleDelete = id => dispatch(deleteContact(id)); //отправляем результат - экшен для удаления
 
-  const handleDelete = () => dispatch(deleteContact(contact.id));
-  console.log(contact);
+  const filterContacts = getFilterContacts(); //в переменную записыаем вызов функции
 
   return (
     <StyledUl>
-      {contacts.map(item => (
+      {filterContacts.map(item => (
         <StyledLi key={item.id}>
           {item.name}: {item.number}
-          <StyledButton onClick={handleDelete}>Delete</StyledButton>
+          <StyledDeleteButton onClick={() => handleDelete(item.id)}>
+            Delete
+          </StyledDeleteButton>
         </StyledLi>
       ))}
     </StyledUl>
   );
 };
-
-// import PropTypes from 'prop-types';
-
-// import { StyledButton, StyledLi, StyledUl } from './ContactList.styled';
-
-// export const ContactList = ({ contacts = [], deleteContact }) => {
-// return (
-//   <StyledUl>
-//     {contacts.map(item => (
-//       <StyledLi key={item.id}>
-//         {item.name}: {item.number}
-//         <StyledButton onClick={() => deleteContact(item.id)}>
-//           Delete
-//         </StyledButton>
-//       </StyledLi>
-//     ))}
-//   </StyledUl>
-// );
-// };
-
-// ContactList.propTypes = {
-//   contacts: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       name: PropTypes.string.isRequired,
-//       number: PropTypes.string.isRequired,
-//     })
-//   ),
-//   deleteContact: PropTypes.func.isRequired,
-// };
